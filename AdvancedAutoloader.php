@@ -4,7 +4,7 @@
  * define namespace
  *
  */
-namespace Conceptixx\AdvancedAutloader
+namespace Conceptixx\AdvancedAutloader;
 
 /**
  *
