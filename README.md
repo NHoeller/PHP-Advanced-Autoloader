@@ -65,6 +65,9 @@ So the PHP-Advanced-Autoloader **EXPECTS** that these files inside the classmap 
 ####classmap-loader
 The next fast file detection can be reached by using a classmap-loader. The PHP-Advanced-Autoloader will lock up for the requested file inside the classmap **AND DELETES** entries from the classmap that are **INVALID** or the requested file is **LOADED**, so the array to be used next will be smaller.
 
+####reflection-optimizer
+The PHP-Advanced-Autoloader contains a system to automatically change itself. The system will log the usage and optimize itself so a nearly perfect performance can be reached.
+e.G. if a project uses the _vendor-loader_ and implements some features that uses a psr-0 autoload the system will rearrange itself. after this optimisation the system will offer the _vendor-loader_ and the _psr-0-loader_ and will only extend itself if there are additional changes.
 
 # Usage
 The PHP-Advanced-Autoloader is designed to be used as easy as possible. so the following 'PHP' code shows how to implement it.
