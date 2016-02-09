@@ -35,6 +35,7 @@ vendorName/.../map.className.json
 vendorName/.../map.className.php
 ```
 This file *MUST* contain a valid json classmap or php array
+
 *json*
 ```json
 {
@@ -59,10 +60,10 @@ return array(
 );
 ?>
 ```
-So the PHP-Advanced-Autoloader expects that these files inside the classmap are needed EVERY TIME the requested class is loaded. The usage of these classmap-extensions SHOULD be reduced to a optimal minimum.
+So the PHP-Advanced-Autoloader expects that these files inside the classmap are needed *EVERY TIME* the requested class is loaded. The usage of these classmap-extensions *SHOULD* be reduced to a optimal minimum.
 
 ####classmap-loader
-The next fast file detection can be reached by using a classmap-loader. The PHP-Advanced-Autoloader will lock up for the requested file inside the classmap AND DELETES entries that are invalid or the requested file is loaded.
+The next fast file detection can be reached by using a classmap-loader. The PHP-Advanced-Autoloader will lock up for the requested file inside the classmap *AND DELETES* entries from the classmap that are *INVALID* or the requested file is *LOADED*.
 
 
 # Usage
