@@ -9,12 +9,12 @@ Also the PHP-Advanced-Autoloader is featured with some high perfomance autoload 
 # Installation
 The PHP-Advanced-Autoloader has some requirements that have to be followed. If these requirements are NOT followed the classes, interfaces and traits have to be changed manually.
 
-1. the advanced autoloader *MUST* be located at _/path/to/vendor/Conceptixx/AdvancedAutoloader_
-2. all project files *SHOULD* be located inside the _/path/to/vendor_
-3. all class files *SHOULD* follow the following naming conventions shown under _'vendor-loading'_
-4. it *SHOULD* be avoided to place files outside the _/path/to/vendor_
-5. all class files located outside th _/path/to/vendor_ *SHOULD* be placed in a 'vendor' path and follow the naming conventions shown under _'vendor-loading'_
-6. all class files *MUST* follow the actual PSR conventions defined by the Framwork Interop Group (currently PSR-4)
+1. the advanced autoloader **MUST** be located at _/path/to/vendor/Conceptixx/AdvancedAutoloader_
+2. all project files **SHOULD** be located inside the _/path/to/vendor_
+3. all class files **SHOULD** follow the following naming conventions shown under _'vendor-loading'_
+4. it **SHOULD** be avoided to place files outside the _/path/to/vendor_
+5. all class files located outside th _/path/to/vendor_ **SHOULD** be placed in a 'vendor' path and follow the naming conventions shown under _'vendor-loading'_
+6. all class files **MUST** follow the actual PSR conventions defined by the Framwork Interop Group (currently PSR-4)
 
 # Features
 The PHP-Advanced-Autoloader is delivered with many features explained below.
@@ -34,9 +34,9 @@ vendorName/.../className.php
 vendorName/.../map.className.json
 vendorName/.../map.className.php
 ```
-This file *MUST* contain a valid json classmap or php array
+This file **MUST** contain a valid json classmap or php array
 
-*json*
+**json**
 ```json
 {
   "VendorName\\PackageName\\SubNamespace\\className1":
@@ -47,7 +47,7 @@ This file *MUST* contain a valid json classmap or php array
     "/path/to/vendor/VendorName/PackageName/SubNamespace/className3.php",
 }
 ```
-*PHP*
+**PHP**
 ```PHP
 <?php
 return array(
@@ -60,10 +60,10 @@ return array(
 );
 ?>
 ```
-So the PHP-Advanced-Autoloader expects that these files inside the classmap are needed *EVERY TIME* the requested class is loaded. The usage of these classmap-extensions *SHOULD* be reduced to a optimal minimum.
+So the PHP-Advanced-Autoloader **EXPECTS** that these files inside the classmap are needed **EVERY TIME** the requested class is loaded. The usage of these classmap-extensions **SHOULD** be reduced to a optimal minimum.
 
 ####classmap-loader
-The next fast file detection can be reached by using a classmap-loader. The PHP-Advanced-Autoloader will lock up for the requested file inside the classmap *AND DELETES* entries from the classmap that are *INVALID* or the requested file is *LOADED*.
+The next fast file detection can be reached by using a classmap-loader. The PHP-Advanced-Autoloader will lock up for the requested file inside the classmap **AND DELETES** entries from the classmap that are **INVALID** or the requested file is **LOADED**, so the array to be used next will be smaller.
 
 
 # Usage
