@@ -20,6 +20,26 @@ class AdvancedAutoloader
 {
 
     /**
+     * DS
+     * 
+     * this constant is defined as the DIRECTORY_SEPARATOR from the PHP for smarter access
+     * by using self::DS
+     * 
+     * @var constant DS
+     */
+    const DS = DIRECTORY_SEPARATOR;
+
+    /**
+     * NS
+     * 
+     * this constant is defined as the \ for namespaces. this constant is only used for replacements
+     * or other other string manipulating methods and functions. It can be accessed by using self::NS.
+     * 
+     * @var constant NS
+     */
+    const NS = '\\';
+
+    /**
      * USED_STANDARDS
      *
      * this constant contains all featured 'standard' this system is using. all values are
@@ -28,6 +48,18 @@ class AdvancedAutoloader
      * @var constant USED_STANDARDS
      */
     const USED_STANDARDS = 'vendor,extend,mapping,psr4,psr0,pear';
+
+    /**
+     * $adaptedStandards
+     * 
+     * this array contains all currently implemented standards, so the system can manage its self
+     * extending features
+     * 
+     * @var array $adaptedStandards
+     * @access protected
+     * @static
+     */
+    protected static $adaptedStandards = array();
 
 // TODO: to be continued
 }
