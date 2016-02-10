@@ -50,6 +50,17 @@ class AdvancedAutoloader
     const USED_STANDARDS = 'vendor,extend,mapping,psr4,psr0,pear';
 
     /**
+     * $autoloaderObject
+     * 
+     * contains the created autoloader object
+     * 
+     * @var object \Conceptixx\AdvancedAutoloader\Interfaces\AdvancedAutoloaderInterface
+     * @access protected
+     * @static
+     */
+    protected static $autoloaderObject;
+
+    /**
      * $adaptedStandards
      * 
      * this array contains all currently implemented standards, so the system can manage its self
@@ -61,5 +72,48 @@ class AdvancedAutoloader
      */
     protected static $adaptedStandards = array();
 
+    /**
+     * getLoader
+     * 
+     * gets the autoloader object detected by configuration
+     * 
+     * @return object \Conceptixx\AdvancedAutoloader\Interfaces\AdvancedAutoloaderInterface
+     * @throws Exception \Exception
+     * @access public
+     * @static
+     */
+    public static function getLoader()
+    {
+        // check for self::$autoloaderObject
+        if(true === \is_object(self::$autoloaderObject)) {
+            // return object
+            return self::$autoloaderObject;
+        }
+
+        // if no object has been found run detection
+        // check if Interface exists and is readable
+        if(false === \is_readable(__DIR__ . self::DS . 'Interfaces' . self::DS . 'AdvancedAutoloaderInterface.php')) {
+            throw new \Exception("The required Interface (AdvancedAutoloaderInterface.php) does not exist or" .
+                " is not readable");
+        }
+        // include the interface
+        include_once(__DIR__ . self::DS . 'Interfaces' . self::DS . 'AdvancedAutoloaderInterface.php');
+
+        // check if json or php configuration exists and is readable
+        if(
+            true === \is_readable(__DIR__ . self::DS . 'cfg.AdvancedAutoloader.json') ||
+            true === \is_readable(__DIR__ . self::DS . 'cfg.AdvancedAutoloader.php')
+        ) {
+            // TODO: to be continued
+        }
+        // if no configuration is found check regular autoloader class
+        if(false === \is_readable(__DIR__ . self::DS . 'Components' . self::DS . 'AdvancedAutoloader.php')) {
+            throw new \Exception("The required class (Components/AdvancedAutoloader.php) does not exist or" .
+                " is not readable");
+        }
+        // include regular PHP-Advanced-Autoloader class
+        include_once(__DIR__ . self::DS . 'Components' . self::DS . 'AdvancedAutoloader.php');
+
+    }
 // TODO: to be continued
 }
