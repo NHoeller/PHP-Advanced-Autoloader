@@ -153,44 +153,18 @@ class AdvancedAutoloader
     }
 
     /**
-     * getAutoloaderByComposer
+     * getAutoloaderByAdapter
      * 
-     * gets the autoloader created with the composer software
+     * gets the autoloader created with an PHP-AdvancedAutoloader adapter software
      * 
-     * @param array $datasetItem
+     * @param string $datasetItem
      * @return object
      * @throw
      * @access protected
      */
     protected function getAutoloaderByComposer(array $datasetItem)
     {
-        // check for composer's autoload.php
-        if(false ==== \is_readable(\dirname(\dirname(__DIR__)) .  self::DS . 'autoload.php')) {
-             // throw exception
-             throw new \Exception("composer's autoload does not exist or is not readable");
-        }
-        // get composer's autoload object
-        $composerAutoloader = require_once(\dirname(\dirname(__DIR__)) .  self::DS . 'autoload.php');
-        // check for Composer interface adapter inside the system
-        if(false === \is_readable(__DIR__ . self::DS . 'Interfaces' . self::DS . 'ComposerAdapterInterface.php')) {
-             // throw exception
-             throw new \Exception("the file 'Interfaces/ComposerAdapterInterface.php' does not exist or" .
-                 " is not readable");
-        }
-        // include composer adapter interface
-        include_once(__DIR__ . self::DS . 'Interfaces' . self::DS . 'ComposerAdapterInterface.php');
-        // check for Composer interface adapter inside the system
-        if(false === \is_readable(__DIR__ . self::DS . 'Composer' . self::DS . 'ComposerAdapter.php')) {
-             // throw exception
-             throw new \Exception("the file 'Composer/ComposerAdapter.php' does not exist or" .
-                 " is not readable");
-        }
-        // include composer adapter class
-        include_once(__DIR__ . self::DS . 'Composer' . self::DS . 'ComposerAdapter.php');
-        // create qualified classname
-        $composerAdapter = __NAMESPACE__ . self::NS . 'Composer' . self::NS . 'ComposerAdapter.php'
-        // return new adapter
-        return new {$somposerAdapter}($composerAutoloader);
+        // check for injection file
     }
 
 // TODO: to be continued
