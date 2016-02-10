@@ -5,6 +5,7 @@ The autoload object will accept all methods that were available for the PHP-Adva
 ##Installation
 To use the composer autoload with the PHP-Advanced-Autoloader just create a _'AdvancedAutoload.json'_ file inside the _/path/to/vendor/Conceptixx/AdvancedAutoloader_ folder.
 The json file needs to contain the following informations
+
 **JSON**
 ```
 {
