@@ -7,6 +7,14 @@
 namespace Conceptixx\AdvancedAutoloader;
 
 /**
+ * 
+ * use statements
+ * 
+ */
+use \Conceptixx\AdvancedAutoloader\Components;
+use \Conceptixx\AdvancedAutoloader\Interfaces\AdvancedAutoloaderInterface;
+
+/**
  *
  * AdvancedAutoloader
  *
@@ -40,16 +48,6 @@ class AdvancedAutoloader
     const NS = '\\';
 
     /**
-     * USED_STANDARDS
-     *
-     * this constant contains all featured 'standard' this system is using. all values are
-     * comma separated and handled by the autoloader system.
-     * 
-     * @var constant USED_STANDARDS
-     */
-    const USED_STANDARDS = 'vendor,extend,mapping,psr4,psr0,pear';
-
-    /**
      * $autoloaderObject
      * 
      * contains the created autoloader object
@@ -59,18 +57,6 @@ class AdvancedAutoloader
      * @static
      */
     protected static $autoloaderObject;
-
-    /**
-     * $adaptedStandards
-     * 
-     * this array contains all currently implemented standards, so the system can manage its self
-     * extending features
-     * 
-     * @var array $adaptedStandards
-     * @access protected
-     * @static
-     */
-    protected static $adaptedStandards = array();
 
     /**
      * getLoader
@@ -90,7 +76,9 @@ class AdvancedAutoloader
             return self::$autoloaderObject;
         }
 
-        // if no object has been found run detection
+        // if no autoloader object has been found object of self needed
+        $autoload = new self();
+
         // check if Interface exists and is readable
         if(false === \is_readable(__DIR__ . self::DS . 'Interfaces' . self::DS . 'AdvancedAutoloaderInterface.php')) {
             throw new \Exception("The required Interface (AdvancedAutoloaderInterface.php) does not exist or" .
@@ -99,21 +87,69 @@ class AdvancedAutoloader
         // include the interface
         include_once(__DIR__ . self::DS . 'Interfaces' . self::DS . 'AdvancedAutoloaderInterface.php');
 
-        // check if json or php configuration exists and is readable
-        if(
-            true === \is_readable(__DIR__ . self::DS . 'cfg.AdvancedAutoloader.json') ||
-            true === \is_readable(__DIR__ . self::DS . 'cfg.AdvancedAutoloader.php')
-        ) {
-            // TODO: to be continued
+        // check if json configuration exists and is readable
+        if(true === \is_readable(__DIR__ . self::DS . 'cfg.AdvancedAutoloader.json')) {
+            // load the json configuration to variable
+            $autoloaderConfig = \file_get_contents(__DIR__ . self::DS . 'cfg.AdvancedAutoloader.json');
+            // decode $autoloaderConfig and run detector (returns final object)
+            return self::$autoloaderObject = $autoload->detectAutoloader(\json_decode($autoloaderConfig, true));
         }
+
         // if no configuration is found check regular autoloader class
         if(false === \is_readable(__DIR__ . self::DS . 'Components' . self::DS . 'AdvancedAutoloader.php')) {
             throw new \Exception("The required class (Components/AdvancedAutoloader.php) does not exist or" .
                 " is not readable");
         }
+
         // include regular PHP-Advanced-Autoloader class
         include_once(__DIR__ . self::DS . 'Components' . self::DS . 'AdvancedAutoloader.php');
+        // store new autoloader to instance and return object
+        return self::$autoloaderObject = new Components\AdvancedAutoloader();
+    }
 
+    /**
+     * detectAutoloader
+     * 
+     * searches a json config for an autoloader to implement
+     * 
+     * @param array $jsonConfiguration
+     * @return object \Conceptixx\AdvancedAutoloader\Interfaces\AdvancedAutoloaderInterface
+     * @throws Exception \Exception
+     * @access protected
+     */
+    protected function detectAutoloader(array $jsonConfiguration)
+    {
+        // check for 'datasets' index in json
+        if(false === isset($jsonConfiguration['datasets'])) {
+            // throw exception
+            throw new \Exception("the 'json'-file does not match the required format");
+        }
+
+        // create counter for logging
+        $itemCounter = 0;
+
+        // loop the 'datasets'
+        foreach($jsonConfiguration['datasets'] as $datasetItem) {
+            // store $itemCounter to dataset and increase counter
+            $datasetItem['itemCounter'] = $itemCounter++;
+            // check for 'methodName' index
+            if(
+                false === isset($datasetItem['methodName']) ||
+                false === \method_exists($this, 'getAutoloaderBy' . $datasetItem['methodName')
+            ) {
+                // throw exception
+                throw new \Exception("parameter 'methodName' in json does not match the requirements");
+            }
+            // create $methodName
+            $methodName = 'getAutoloaderBy' . $datasetItem['methodName';
+            // check result from the get...By method
+            if(($methodResult = $this->{$methodName}($datasetItem)) instanceof AdvancedAutoloaderInterface) {
+                // store $methodResult to self::$autoloaderObject and return it
+                return self::$autoloaderObject = $methodResult;
+            }
+        }
+        // if no loader can be detected throw exception
+        throw new \Exception("no autoloader can be detected from json-file");
     }
 // TODO: to be continued
 }
