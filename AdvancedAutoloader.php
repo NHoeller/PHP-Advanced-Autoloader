@@ -151,5 +151,28 @@ class AdvancedAutoloader
         // if no loader can be detected throw exception
         throw new \Exception("no autoloader can be detected from json-file");
     }
+
+    /**
+     * getAutoloaderByComposer
+     * 
+     * gets the autoloader created with the composer software
+     * 
+     * @param array $datasetItem
+     * @return object
+     * @throw
+     * @access protected
+     */
+     protected function getAutoloaderByComposer(array $datasetItem)
+     {
+         // check for composer's autoload.php
+         if(false ==== is_readable(\dirname(\dirname(__DIR__)) .  self::DS . 'autoload.php')) {
+             // throw exception
+             throw new \Exception("composer's autoload does not exist or is not readable");
+         }
+         // get composer's autoload object
+         $composerAutoloader = require_once(\dirname(\dirname(__DIR__)) .  self::DS . 'autoload.php');
+         
+     }
+
 // TODO: to be continued
 }
