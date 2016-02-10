@@ -172,13 +172,13 @@ class AdvancedAutoloader
         // get composer's autoload object
         $composerAutoloader = require_once(\dirname(\dirname(__DIR__)) .  self::DS . 'autoload.php');
         // check for Composer interface adapter inside the system
-        if(false === \is_readable(__DIR__ . self::DS . 'Composer' . self::DS . 'ComposerAdapterInterface.php')) {
+        if(false === \is_readable(__DIR__ . self::DS . 'Interfaces' . self::DS . 'ComposerAdapterInterface.php')) {
              // throw exception
-             throw new \Exception("the file 'Composer/ComposerAdapterInterface.php' does not exist or" .
+             throw new \Exception("the file 'Interfaces/ComposerAdapterInterface.php' does not exist or" .
                  " is not readable");
         }
         // include composer adapter interface
-        include_once(__DIR__ . self::DS . 'Composer' . self::DS . 'ComposerAdapterInterface.php');
+        include_once(__DIR__ . self::DS . 'Interfaces' . self::DS . 'ComposerAdapterInterface.php');
         // check for Composer interface adapter inside the system
         if(false === \is_readable(__DIR__ . self::DS . 'Composer' . self::DS . 'ComposerAdapter.php')) {
              // throw exception
